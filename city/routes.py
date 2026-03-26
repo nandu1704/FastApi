@@ -1,15 +1,14 @@
 import json
 from time import time
 import greenstalk
-from database import sessionLocal
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models import City, CityModel, CityCreate
-from database import get_db
-from email_utils import send_email
+from database import get_db, Base, engine
 
 router = APIRouter()
 
+Base.metadata.create_all(bind=engine)
 
 @router.get("/city")
 async def get_city(db: Session = Depends(get_db)):
